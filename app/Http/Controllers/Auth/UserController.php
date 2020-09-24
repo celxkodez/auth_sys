@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
-    public function register()
+    public function register(Request $request)
     {
-        $this->validate(request(), [
+        $this->validate($request, [
             'email' => ['required','email', 'unique:users'],
             'password' => ['required', 'confirmed'],
             'name' => ['required','string']
@@ -32,15 +32,13 @@ class UserController extends Controller
             'status' => true,
             'message' => 'successful',
             'code' => 200,
-            "data" => [
-                'user' => $user,
-                'token' => [
-                    'access_token' => $accessToken,
-                    'token_type' => 'Bearer',
-                    'expires_at' => Carbon::parse(
-                        $token->token->expires_at
-                    )->toDateTimeString()
-                ]
+            'user' => $user,
+            'token' => [
+                'access_token' => $accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $token->token->expires_at
+                )->toDateTimeString()
             ]
         ];
 
