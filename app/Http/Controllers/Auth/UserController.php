@@ -32,17 +32,19 @@ class UserController extends Controller
             'status' => true,
             'message' => 'successful',
             'code' => 200,
-            'user' => $user,
-            'token' => [
-                'access_token' => $accessToken,
-                'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $token->token->expires_at
-                )->toDateTimeString()
+            "data" => [
+                'user' => $user,
+                'token' => [
+                    'access_token' => $accessToken,
+                    'token_type' => 'Bearer',
+                    'expires_at' => Carbon::parse(
+                        $token->token->expires_at
+                    )->toDateTimeString()
+                ]
             ]
         ];
 
-        return response()->json($res);
+        return response()->json(json_encode($res));
     }
     
     public function login()
