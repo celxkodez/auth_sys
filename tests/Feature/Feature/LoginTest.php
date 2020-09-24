@@ -14,8 +14,11 @@ class LoginTest extends TestCase
 {
     public function testRequiresEmailAndLogin()
     {
-        $this->json('PATCH', 'api/login')
-            ->assertStatus(401)
+        $req = $this->patch('api/login');
+        // $this->json('PATCH', 'api/login')
+
+        dd($req);
+        $req->assertStatus(401)
             ->assertJsonStructure([
                 "status",
                 "code",

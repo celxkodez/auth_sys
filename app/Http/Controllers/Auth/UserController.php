@@ -60,7 +60,7 @@ class UserController extends Controller
                 'message' => 'Unauthorized',
                 'description' => 'Wrong credentials'
             ];
-            return response()->json($res);
+            return response()->json($res, 401);
         }
 
         $user = request()->user();
