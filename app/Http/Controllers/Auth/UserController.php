@@ -44,7 +44,7 @@ class UserController extends Controller
             ]
         ];
 
-        return response()->json(json_encode($res));
+        return response()->json($res, 200);
     }
     
     public function login()

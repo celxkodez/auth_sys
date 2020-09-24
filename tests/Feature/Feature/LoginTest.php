@@ -9,6 +9,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 // use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
 class LoginTest extends TestCase
 {
@@ -30,23 +31,22 @@ class LoginTest extends TestCase
         $user = factory(User::class)->create([
             'name' => 'test name',
             'email' => 'testlogin@mail.com',
-            'password' => bcrypt('password'),
+            'password' => Hash::make('password'),
         ]);
 
-        $payload = ['email' => 'testlogin@mail.com', 'password' => 'passsword'];
+        $payload = ['email' => 'testlogin@mail.com', 'password' => 'password'];
 
-        $this->withHeaders([
-            'Content-Type' => 'Application/json',
-        ])->json('PATCH', 'api/login', $payload)
-            ->assertStatus(200)
+        $req = $this->patch('api/login', $payload);
+
+        $req->assertStatus(200)
             ->assertJsonStructure([
-                // 'data' =>[
-                //     // "status",
-                // "message",
-                // "code",
-                // "user",
-                // "token"
-                // ]
+                
+                "status",
+                "message",
+                "code",
+                "user",
+                "token"
+                
             ]);
 
     }

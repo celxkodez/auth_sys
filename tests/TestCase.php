@@ -10,15 +10,10 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, DatabaseMigrations;
 
-    // public function setUp()
-    // {
-    //     parent::setUp();
-    //     Artisan::call('db:seed');
-    // }
-
     protected function setUp(): void
     {
         parent::setUp();
+        Artisan::call('passport:install');
         // $this->markTestSkipped(
         //     'This test will be skipped when you run `php-unit`.'
         // );
