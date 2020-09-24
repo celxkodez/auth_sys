@@ -17,22 +17,22 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'password',
         ];
 
-        $this->json('post', '/api/register', $payload)
-            ->assertStatus(201)
+       $req =  $this->post('api/register', $payload);
+    //    dd($req);
+       $req->assertStatus(200)
             ->assertJsonStructure([
-                // 'data' => [
-                //     'status',
-                //     'message',
-                //     'code',
-                //     'user',
-                //     'token',
-                // ],
-            ]);;
+                "status",
+                "message",
+                "code",
+                "user",
+                "token"
+               
+            ]);
     }
 
     public function testsRequiresPasswordEmailAndName()
     {
-        $this->json('post', '/api/register')
+        $this->post('/api/register')
             ->assertStatus(422)
             ->assertJson([
                 'name' => ['The name field is required.'],
@@ -49,7 +49,7 @@ class RegisterTest extends TestCase
             'password' => 'toptal123',
         ];
 
-        $this->json('post', '/api/register', $payload)
+        $this->post('/api/register', $payload)
             ->assertStatus(422)
             ->assertJson([
                 'password' => ['The password confirmation does not match.'],
